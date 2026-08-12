@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anjali Keshri | AI & ML Developer</title>
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --card-bg: rgba(22, 31, 48, 0.7);
+            --card-border: rgba(56, 189, 248, 0.15);
+            --accent-cyan: #38bdf8;
+            --accent-purple: #a855f7;
+            --accent-pink: #ec4899;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glow: 0 0 25px rgba(56, 189, 248, 0.25);
+            --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 60%, rgba(168, 85, 247, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        /* Glassmorphism Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(9, 13, 22, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 8rem;
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: var(--accent-cyan);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        .badge-purple {
+            background: rgba(168, 85, 247, 0.1);
+            border-color: rgba(168, 85, 247, 0.3);
+            color: var(--accent-purple);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.85rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: #000;
+            box-shadow: var(--glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(56, 189, 248, 0.45);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--card-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-cyan);
+        }
+
+        /* Section Titles */
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--card-border), transparent);
+            margin-left: 1rem;
+        }
+
+        /* Cards Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.8rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .card:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* Academic Highlights */
+        .academics-card h3 {
+            font-size: 1.2rem;
+            color: var(--accent-cyan);
+            margin-bottom: 0.3rem;
+        }
+
+        .academics-card .institution {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .scores-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .academics-card .score {
+            display: inline-block;
+            background: rgba(168, 85, 247, 0.15);
+            color: var(--accent-purple);
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .academics-card .score-highlight {
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent-cyan);
+        }
+
+        /* Projects */
+        .project-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.6rem;
+            color: var(--text-primary);
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--accent-cyan);
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Skills Pill Layout */
+        .skills-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .skill-pill {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .skill-pill:hover {
+            border-color: var(--accent-purple);
+            transform: scale(1.03);
+        }
+
+        /* Achievement List */
+        .achievement-list {
+            list-style: none;
+        }
+
+        .achievement-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .achievement-list li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+            font-weight: bold;
+        }
+
+        /* Contact Section */
+        .contact-box {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(168, 85, 247, 0.05));
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .contact-box h2 {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .contact-box p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+
+        .contact-details {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--card-border);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            section { padding: 4rem 0; }
+            .hero { min-height: 80vh; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Anjali Keshri</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#achievements">Achievements</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="badge-container">
+                <div class="badge">🌟 9.88 YGPA First Year</div>
+                <div class="badge badge-purple">✨ 10 SGPA Sem 1 | 9.77 SGPA Sem 2</div>
+            </div>
+            <h1>Hi, I'm <span>Anjali Keshri</span>.<br>Building intelligent solutions.</h1>
+            <p>B.Tech CSE student specializing in Artificial Intelligence & Machine Learning at Heritage Institute of Technology. Driven by code, mathematical precision, and web application design.</p>
+            <p style="margin-bottom: 1.5rem; color: var(--accent-cyan); font-weight: 600; font-size: 1rem;">
+                ✉️ anjalike16@gmail.com
+            </p>
+            <div class="hero-cta">
+                <a href="#projects" class="btn btn-primary">Explore My Work</a>
+                <a href="mailto:anjalike16@gmail.com" class="btn btn-secondary">Get In Touch</a>
+            </div>
+
+        <!-- Profile Picture Container -->
+        <div style="position: relative; width: 280px; height: 280px; flex-shrink: 0; margin: 0 auto;">
+            <img src="Self.jpeg" alt="Anjali Keshri" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 3px solid var(--accent-cyan); box-shadow: 0 0 35px rgba(56, 189, 248, 0.3);">
+        </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="section-header">
+                <h2 class="section-title">Career Objective</h2>
+            </div>
+            <div class="card">
+                <p style="color: var(--text-secondary); font-size: 1.05rem;">
+                    To secure an opportunity where I can apply my technical knowledge, creativity, and problem-solving skills while gaining hands-on experience in Artificial Intelligence, Machine Learning, and Software Development. Eager to contribute, learn, and grow by working on meaningful real-world problems and innovative technology solutions.
+                </p>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education">
+            <div class="section-header">
+                <h2 class="section-title">Academic Background</h2>
+            </div>
+            <div class="grid-3">
+                <div class="card academics-card">
+                    <h3>B.Tech CSE (AI & ML)</h3>
+                    <div class="institution">Heritage Institute of Technology, Kolkata</div>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem;">Autonomous Institution, Affiliated to MAKAUT</p>
+                    <div class="scores-wrapper">
+                        <div class="score score-highlight">9.88 YGPA (1st Year)</div>
+                        <div class="score">10 SGPA (Sem 1)</div>
+                        <div class="score">9.77 SGPA (Sem 2)</div>
+                    </div>
+                </div>
+                <div class="card academics-card">
+                    <h3>Class XII (CBSE - Science)</h3>
+                    <div class="institution">Explore International School, Hooghly</div>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem;">Passed in 2025</p>
+                    <div class="scores-wrapper">
+                        <div class="score">91.4% Score</div>
+                    </div>
+                </div>
+                <div class="card academics-card">
+                    <h3>Class X (ICSE - Science)</h3>
+                    <div class="institution">Oxford High School, Howrah</div>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem;">Passed in 2023</p>
+                    <div class="scores-wrapper">
+                        <div class="score">97.0% Score</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <div class="section-header">
+                <h2 class="section-title">Featured Projects</h2>
+            </div>
+            <div class="grid-2">
+                <div class="card project-card">
+                    <h3>Escape Road Game</h3>
+                    <p>An interactive browser-based arcade game featuring smooth vehicle mechanics, dynamic obstacle generation, and real-time collision detection.</p>
+                    <div class="tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Game Logic</span>
+                    </div>
+                </div>
+                <div class="card project-card">
+                    <h3>Classic Snake Game</h3>
+                    <p>A classic arcade adaptation featuring responsive canvas rendering, score tracking, speed scaling, and collision detection systems.</p>
+                    <div class="tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                </div>
+                <div class="card project-card">
+                    <h3>Nexus Game Suite</h3>
+                    <p>A unified arcade launcher housing 5 classic games: Snake, Tetris, Pong, Minesweeper, and Slide Puzzle.</p>
+                    <div class="tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Game Architecture</span>
+                    </div>
+                </div>
+                <div class="card project-card">
+                    <h3>Study Flow - Academic Productivity</h3>
+                    <p>A comprehensive student productivity platform featuring a dynamic to-do tracker, timetable planner, and syllabus progress monitor[cite: 1].</p>
+                    <div class="tags">
+                        <span class="tag">HTML/CSS</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Productivity UI</span>
+                    </div>
+                </div>
+                <div class="card project-card">
+                    <h3>Typist Application</h3>
+                    <p>A responsive web app designed to measure, track, and improve user typing speed (WPM) and real-time accuracy[cite: 1].</p>
+                    <div class="tags">
+                        <span class="tag">HTML5/CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">UX Metrics</span>
+                    </div>
+                </div>
+                <div class="card project-card">
+                    <h3>Quiz Blitz</h3>
+                    <p>An interactive dynamic quiz engine providing tailored assessments across various topics based on user preferences[cite: 1].</p>
+                    <div class="tags">
+                        <span class="tag">Front-End</span>
+                        <span class="tag">Dynamic UI</span>
+                        <span class="tag">State Management</span>
+                    </div>
+                </div>
+                <div class="card project-card">
+                    <h3>Scientific Calculator</h3>
+                    <p>A functional computational tool built to evaluate complex mathematical operations and advanced scientific functions[cite: 1].</p>
+                    <div class="tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Algorithms</span>
+                        <span class="tag">UI Design</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <div class="section-header">
+                <h2 class="section-title">Technical Proficiency & Certifications</h2>
+            </div>
+            <div style="margin-bottom: 2rem;">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 1rem; font-size: 1.1rem;">Programming & Core Languages</h3>
+                <div class="skills-wrapper">
+                    <div class="skill-pill">⚡ Python</div>
+                    <div class="skill-pill">☕ Java</div>
+                    <div class="skill-pill">⚙️ C</div>
+                    <div class="skill-pill">🗄️ SQL</div>
+                    <div class="skill-pill">🌐 Front-End (HTML, CSS, JS)</div>
+                </div>
+            </div>
+            <div>
+                <h3 style="color: var(--accent-purple); margin-bottom: 1rem; font-size: 1.1rem;">Verified Certifications</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <strong style="color: var(--text-primary);">Machine Learning using Python</strong>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">Simplilearn (Skill-Up)</p>
+                    </div>
+                    <div class="card">
+                        <strong style="color: var(--text-primary);">Python for Data Science</strong>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">Cognitive Class</p>
+                    </div>
+                    <div class="card">
+                        <strong style="color: var(--text-primary);">Prompt Engineering</strong>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">Cognitive Class</p>
+                    </div>
+                    <div class="card">
+                        <strong style="color: var(--text-primary);">Business Analysis & Process Management</strong>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">Coursera</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements & Co-Curricular Section -->
+        <section id="achievements">
+            <div class="section-header">
+                <h2 class="section-title">Achievements & Extracurriculars</h2>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3 style="color: var(--accent-cyan); margin-bottom: 1rem;">Competitions & Events</h3>
+                    <ul class="achievement-list">
+                        <li>Finalist in <strong>Ace the Case</strong> (Srijan'26)</li>
+                        <li>1st Runner-Up in <strong>Sci-Charades</strong> (Dakshh'26)</li>
+                        <li>Participated in <strong>Hack-Your-Way</strong> (Envisage'26)</li>
+                        <li>Participated in <strong>Industrix</strong> (Srijan'26)</li>
+                        <li>Participant in <strong>KOH-I-NOOR</strong> General Quiz (HITK)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 style="color: var(--accent-purple); margin-bottom: 1rem;">Memberships & Interests</h3>
+                    <ul class="achievement-list">
+                        <li>Active Member: <strong>ACM Student Chapter, HITK</strong></li>
+                        <li>Soft Skills: Leadership & Public Communication</li>
+                        <li>Creative Pursuits: Canvas Painting & Fine Arts</li>
+                        <li>Languages Known: English, Hindi, Bengali</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="contact-box">
+                <h2>Let's Connect</h2>
+                <p>I am actively seeking software engineering, machine learning, and AI-related internship opportunities.</p>
+                <div class="contact-details">
+                    <span>📍 Kolkata, West Bengal</span>
+                    <span>📞 +91 98362 43935</span>
+                </div>
+                <a href="mailto:anjalike16@gmail.com" class="btn btn-primary">Send An Email</a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Anjali Keshri. Built for performance and modern web standards.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
