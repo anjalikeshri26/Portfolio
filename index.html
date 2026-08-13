@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anjali Keshri | AI & ML Developer</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- AOS Library for Scroll Animations -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
         :root {
             --bg-dark: #090d16;
-            --card-bg: rgba(22, 31, 48, 0.7);
-            --card-border: rgba(56, 189, 248, 0.15);
+            --card-bg: rgba(22, 31, 48, 0.65);
+            --card-border: rgba(56, 189, 248, 0.2);
             --accent-cyan: #38bdf8;
             --accent-purple: #a855f7;
             --accent-pink: #ec4899;
@@ -24,16 +28,28 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-dark);
             color: var(--text-primary);
             font-family: var(--font-main);
             line-height: 1.6;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 85% 60%, rgba(168, 85, 247, 0.08) 0%, transparent 40%);
-            background-attachment: fixed;
+            position: relative;
+        }
+
+        /* Canvas Background for Floating Anti-Gravity Dust */
+        #gravity-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
         }
 
         /* Glassmorphism Navigation */
@@ -41,10 +57,11 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(9, 13, 22, 0.8);
+            background: rgba(9, 13, 22, 0.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--card-border);
             z-index: 1000;
+            transition: all 0.3s ease;
         }
 
         .nav-container {
@@ -64,12 +81,14 @@
             -webkit-text-fill-color: transparent;
             text-decoration: none;
             letter-spacing: -0.5px;
+            animation: floatSlow 4s ease-in-out infinite;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.8rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
@@ -82,7 +101,25 @@
 
         .nav-links a:hover {
             color: var(--accent-cyan);
-            text-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+            text-shadow: 0 0 12px rgba(56, 189, 248, 0.8);
+        }
+
+        .nav-socials {
+            display: flex;
+            gap: 1rem;
+            border-left: 1px solid var(--card-border);
+            padding-left: 1.5rem;
+        }
+
+        .nav-socials a {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-socials a:hover {
+            color: var(--accent-cyan);
+            transform: translateY(-4px) scale(1.1);
         }
 
         /* Main Container */
@@ -90,6 +127,8 @@
             max-width: 1100px;
             margin: 0 auto;
             padding: 0 2rem;
+            position: relative;
+            z-index: 1;
         }
 
         section {
@@ -100,16 +139,14 @@
         .hero {
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding-top: 8rem;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 110px;
+            gap: 2rem;
         }
 
-        .badge-container {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
+        .hero-content {
+            flex: 1;
         }
 
         .badge {
@@ -123,17 +160,18 @@
             border-radius: 50px;
             font-size: 0.85rem;
             font-weight: 600;
-            width: fit-content;
+            animation: antiGravityFloat 5s ease-in-out infinite alternate;
         }
 
         .badge-purple {
             background: rgba(168, 85, 247, 0.1);
             border-color: rgba(168, 85, 247, 0.3);
             color: var(--accent-purple);
+            animation-delay: -2.5s;
         }
 
         .hero h1 {
-            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-size: clamp(2.8rem, 5vw, 4.2rem);
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 1rem;
@@ -144,13 +182,43 @@
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: textGradient 4s linear infinite;
         }
 
         .hero p {
             font-size: 1.25rem;
             color: var(--text-secondary);
             max-width: 650px;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-social-links {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .social-btn:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(56, 189, 248, 0.15);
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
         }
 
         .hero-cta {
@@ -162,6 +230,7 @@
         .btn {
             display: inline-flex;
             align-items: center;
+            gap: 0.5rem;
             padding: 0.85rem 1.8rem;
             border-radius: 8px;
             font-weight: 600;
@@ -174,22 +243,56 @@
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
             color: #000;
             box-shadow: var(--glow);
+            animation: pulseGlow 3s infinite ease-in-out;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 35px rgba(56, 189, 248, 0.45);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 0 35px rgba(56, 189, 248, 0.6);
         }
 
         .btn-secondary {
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-primary);
             border: 1px solid var(--card-border);
+            backdrop-filter: blur(5px);
         }
 
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: var(--accent-cyan);
+            transform: translateY(-5px);
+        }
+
+        /* Profile Floating Anti-Gravity Container */
+        .profile-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            flex-shrink: 0;
+            animation: antiGravityFloat 6s ease-in-out infinite alternate;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--accent-cyan);
+            box-shadow: 0 0 35px rgba(56, 189, 248, 0.4);
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-backdrop {
+            position: absolute;
+            inset: -15px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
+            filter: blur(25px);
+            opacity: 0.5;
+            z-index: 1;
+            animation: pulseGlow 4s ease-in-out infinite alternate;
         }
 
         /* Section Titles */
@@ -213,27 +316,40 @@
             margin-left: 1rem;
         }
 
-        /* Cards Grid */
+        /* Cards Grid with Anti-Gravity Hover Effect */
         .grid-2 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
+            gap: 1.8rem;
         }
 
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            gap: 1.8rem;
         }
 
         .card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 1.8rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.4s ease, 
+                        box-shadow 0.4s ease;
             position: relative;
             overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        /* Anti-Gravity Weightless Levitation Effect on Hover */
+        .card:hover {
+            transform: translateY(-12px) scale(1.02) rotateX(2deg) rotateY(-2deg);
+            border-color: rgba(56, 189, 248, 0.6);
+            box-shadow: 0 20px 40px -15px rgba(56, 189, 248, 0.25),
+                        0 0 15px rgba(168, 85, 247, 0.15);
         }
 
         .card::before {
@@ -243,15 +359,9 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), var(--accent-purple), transparent);
             transform: translateX(-100%);
-            transition: transform 0.5s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(56, 189, 248, 0.4);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.6s ease;
         }
 
         .card:hover::before {
@@ -283,7 +393,7 @@
             background: rgba(168, 85, 247, 0.15);
             color: var(--accent-purple);
             padding: 0.25rem 0.6rem;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 0.85rem;
             font-weight: 700;
         }
@@ -320,9 +430,15 @@
             border-radius: 6px;
             font-size: 0.75rem;
             font-weight: 600;
+            transition: all 0.3s ease;
         }
 
-        /* Skills Pill Layout */
+        .card:hover .tag {
+            border-color: rgba(56, 189, 248, 0.3);
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        /* Skills Floating Pills */
         .skills-wrapper {
             display: flex;
             flex-wrap: wrap;
@@ -333,18 +449,25 @@
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             padding: 0.6rem 1.2rem;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 0.9rem;
             color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            transition: all 0.2s ease;
+            backdrop-filter: blur(5px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: antiGravityFloat 5s ease-in-out infinite alternate;
+        }
+
+        .skill-pill:nth-child(even) {
+            animation-delay: -2s;
         }
 
         .skill-pill:hover {
             border-color: var(--accent-purple);
-            transform: scale(1.03);
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 0 10px 20px rgba(168, 85, 247, 0.3);
         }
 
         /* Achievement List */
@@ -357,6 +480,12 @@
             padding-left: 1.5rem;
             margin-bottom: 0.8rem;
             color: var(--text-secondary);
+            transition: transform 0.3s ease;
+        }
+
+        .achievement-list li:hover {
+            transform: translateX(6px);
+            color: var(--text-primary);
         }
 
         .achievement-list li::before {
@@ -369,11 +498,13 @@
 
         /* Contact Section */
         .contact-box {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(168, 85, 247, 0.05));
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(168, 85, 247, 0.08));
             border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 3rem 2rem;
+            border-radius: 20px;
+            padding: 3.5rem 2rem;
             text-align: center;
+            backdrop-filter: blur(10px);
+            animation: floatSlow 6s ease-in-out infinite;
         }
 
         .contact-box h2 {
@@ -397,6 +528,13 @@
             font-size: 0.95rem;
         }
 
+        .contact-socials {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
         /* Footer */
         footer {
             border-top: 1px solid var(--card-border);
@@ -404,16 +542,55 @@
             text-align: center;
             color: var(--text-secondary);
             font-size: 0.85rem;
+            position: relative;
+            z-index: 1;
         }
 
-        @media (max-width: 768px) {
+        /* Keyframes for Anti-Gravity & Float Animations */
+        @keyframes antiGravityFloat {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(1deg);
+            }
+            100% {
+                transform: translateY(-25px) rotate(-1deg);
+            }
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.05); }
+        }
+
+        @keyframes textGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                justify-content: center;
+                padding-top: 7rem;
+            }
+            .hero-p { margin: 0 auto 2rem; }
+            .badge-container, .hero-cta, .hero-social-links { justify-content: center; }
             .nav-links { display: none; }
-            section { padding: 4rem 0; }
-            .hero { min-height: 80vh; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Floating Interactive Background Canvas -->
+    <canvas id="gravity-canvas"></canvas>
 
     <nav>
         <div class="nav-container">
@@ -426,34 +603,45 @@
                 <li><a href="#achievements">Achievements</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="nav-socials">
+                <a href="https://github.com/" target="_blank" title="GitHub Profile"><i class="fa-brands fa-github"></i></a>
+                <a href="https://linkedin.com/in/" target="_blank" title="LinkedIn Profile"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
         </div>
     </nav>
 
     <div class="container">
         <!-- Hero Section -->
         <section class="hero">
-            <div class="badge-container">
-                <div class="badge">🌟 9.88 YGPA First Year</div>
-                <div class="badge badge-purple">✨ 10 SGPA Sem 1 | 9.77 SGPA Sem 2</div>
-            </div>
-            <h1>Hi, I'm <span>Anjali Keshri</span>.<br>Building intelligent solutions.</h1>
-            <p>B.Tech CSE student specializing in Artificial Intelligence & Machine Learning at Heritage Institute of Technology. Driven by code, mathematical precision, and web application design.</p>
-            <p style="margin-bottom: 1.5rem; color: var(--accent-cyan); font-weight: 600; font-size: 1rem;">
-                ✉️ anjalike16@gmail.com
-            </p>
-            <div class="hero-cta">
-                <a href="#projects" class="btn btn-primary">Explore My Work</a>
-                <a href="mailto:anjalike16@gmail.com" class="btn btn-secondary">Get In Touch</a>
+            <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
+                <h1>Hi, I'm <span>Anjali Keshri</span>.<br>Building intelligent solutions.</h1>
+                <p class="hero-p">B.Tech CSE student specializing in Artificial Intelligence & Machine Learning at Heritage Institute of Technology. Driven by code, mathematical precision, and web application design.</p>
+                
+                <!-- Social Profiles -->
+                <div class="hero-social-links">
+                    <a href="https://github.com/" target="_blank" class="social-btn">
+                        <i class="fa-brands fa-github"></i> GitHub
+                    </a>
+                    <a href="https://linkedin.com/in/" target="_blank" class="social-btn">
+                        <i class="fa-brands fa-linkedin"></i> LinkedIn
+                    </a>
+                </div>
+
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary"><i class="fa-solid fa-code"></i> Explore My Work</a>
+                    <a href="mailto:anjalike16@gmail.com" class="btn btn-secondary"><i class="fa-regular fa-envelope"></i> Get In Touch</a>
+                </div>
             </div>
 
-        <!-- Profile Picture Container -->
-        <div style="position: relative; width: 280px; height: 280px; flex-shrink: 0; margin: 0 auto;">
-            <img src="Self.jpeg" alt="Anjali Keshri" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 3px solid var(--accent-cyan); box-shadow: 0 0 35px rgba(56, 189, 248, 0.3);">
-        </div>
+            <!-- Profile Picture Container -->
+            <div class="profile-container" data-aos="fade-left" data-aos-duration="1000">
+                <div class="profile-backdrop"></div>
+                <img src="Self.jpeg" alt="Anjali Keshri" class="profile-img">
+            </div>
         </section>
 
         <!-- About Section -->
-        <section id="about">
+        <section id="about" data-aos="fade-up">
             <div class="section-header">
                 <h2 class="section-title">Career Objective</h2>
             </div>
@@ -466,11 +654,11 @@
 
         <!-- Education Section -->
         <section id="education">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <h2 class="section-title">Academic Background</h2>
             </div>
             <div class="grid-3">
-                <div class="card academics-card">
+                <div class="card academics-card" data-aos="fade-up" data-aos-delay="100">
                     <h3>B.Tech CSE (AI & ML)</h3>
                     <div class="institution">Heritage Institute of Technology, Kolkata</div>
                     <p style="color: var(--text-secondary); font-size: 0.85rem;">Autonomous Institution, Affiliated to MAKAUT</p>
@@ -480,7 +668,7 @@
                         <div class="score">9.77 SGPA (Sem 2)</div>
                     </div>
                 </div>
-                <div class="card academics-card">
+                <div class="card academics-card" data-aos="fade-up" data-aos-delay="200">
                     <h3>Class XII (CBSE - Science)</h3>
                     <div class="institution">Explore International School, Hooghly</div>
                     <p style="color: var(--text-secondary); font-size: 0.85rem;">Passed in 2025</p>
@@ -488,7 +676,7 @@
                         <div class="score">91.4% Score</div>
                     </div>
                 </div>
-                <div class="card academics-card">
+                <div class="card academics-card" data-aos="fade-up" data-aos-delay="300">
                     <h3>Class X (ICSE - Science)</h3>
                     <div class="institution">Oxford High School, Howrah</div>
                     <p style="color: var(--text-secondary); font-size: 0.85rem;">Passed in 2023</p>
@@ -501,29 +689,12 @@
 
         <!-- Projects Section -->
         <section id="projects">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <h2 class="section-title">Featured Projects</h2>
             </div>
             <div class="grid-2">
-                <div class="card project-card">
-                    <h3>Escape Road Game</h3>
-                    <p>An interactive browser-based arcade game featuring smooth vehicle mechanics, dynamic obstacle generation, and real-time collision detection.</p>
-                    <div class="tags">
-                        <span class="tag">HTML5</span>
-                        <span class="tag">JavaScript</span>
-                        <span class="tag">Game Logic</span>
-                    </div>
-                </div>
-                <div class="card project-card">
-                    <h3>Classic Snake Game</h3>
-                    <p>A classic arcade adaptation featuring responsive canvas rendering, score tracking, speed scaling, and collision detection systems.</p>
-                    <div class="tags">
-                        <span class="tag">HTML5</span>
-                        <span class="tag">CSS3</span>
-                        <span class="tag">JavaScript</span>
-                    </div>
-                </div>
-                <div class="card project-card">
+                <!-- 1. Nexus Game Suite -->
+                <div class="card project-card" data-aos="fade-up" data-aos-delay="100">
                     <h3>Nexus Game Suite</h3>
                     <p>A unified arcade launcher housing 5 classic games: Snake, Tetris, Pong, Minesweeper, and Slide Puzzle.</p>
                     <div class="tags">
@@ -532,58 +703,111 @@
                         <span class="tag">Game Architecture</span>
                     </div>
                 </div>
-                <div class="card project-card">
-                    <h3>Study Flow - Academic Productivity</h3>
-                    <p>A comprehensive student productivity platform featuring a dynamic to-do tracker, timetable planner, and syllabus progress monitor[cite: 1].</p>
+
+                <!-- 2. SafeRoute -->
+                <div class="card project-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3>SafeRoute</h3>
+                    <p>A smart navigation application providing safety-aware route optimization, real-time risk assessment, and hazard detection for commuters.</p>
                     <div class="tags">
-                        <span class="tag">HTML/CSS</span>
-                        <span class="tag">JavaScript</span>
-                        <span class="tag">Productivity UI</span>
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag">Geospatial API</span>
+                        <span class="tag">Python</span>
                     </div>
                 </div>
-                <div class="card project-card">
+
+                <!-- 3. Typist Application -->
+                <div class="card project-card" data-aos="fade-up" data-aos-delay="100">
                     <h3>Typist Application</h3>
-                    <p>A responsive web app designed to measure, track, and improve user typing speed (WPM) and real-time accuracy[cite: 1].</p>
+                    <p>A responsive web app designed to measure, track, and improve user typing speed (WPM) and real-time accuracy.</p>
                     <div class="tags">
                         <span class="tag">HTML5/CSS3</span>
                         <span class="tag">JavaScript</span>
                         <span class="tag">UX Metrics</span>
                     </div>
                 </div>
-                <div class="card project-card">
-                    <h3>Quiz Blitz</h3>
-                    <p>An interactive dynamic quiz engine providing tailored assessments across various topics based on user preferences[cite: 1].</p>
+
+                <!-- 4. JurisGuide -->
+                <div class="card project-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3>JurisGuide</h3>
+                    <p>An AI-powered legal assistance platform designed to simplify legal information, provide structured guidance, and make legal consultation accessible.</p>
                     <div class="tags">
-                        <span class="tag">Front-End</span>
-                        <span class="tag">Dynamic UI</span>
-                        <span class="tag">State Management</span>
+                        <span class="tag">AI System</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">NLP</span>
+                        <span class="tag">Web UI</span>
                     </div>
                 </div>
-                <div class="card project-card">
+
+                <!-- 5. Scientific Calculator -->
+                <div class="card project-card" data-aos="fade-up" data-aos-delay="100">
                     <h3>Scientific Calculator</h3>
-                    <p>A functional computational tool built to evaluate complex mathematical operations and advanced scientific functions[cite: 1].</p>
+                    <p>A computational tool built to evaluate complex mathematical functions, trigonometry, and advanced scientific expressions with computational precision.</p>
                     <div class="tags">
                         <span class="tag">Python</span>
                         <span class="tag">Algorithms</span>
                         <span class="tag">UI Design</span>
                     </div>
                 </div>
+
+                <!-- 6. Escape Road Game -->
+                <div class="card project-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Escape Road Game</h3>
+                    <p>An interactive browser-based arcade game featuring smooth vehicle mechanics, dynamic obstacle generation, and real-time collision detection.</p>
+                    <div class="tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Game Logic</span>
+                    </div>
+                </div>
+
+                <!-- 7. Classic Snake Game -->
+                <div class="card project-card" data-aos="fade-up" data-aos-delay="100">
+                    <h3>Classic Snake Game</h3>
+                    <p>A classic arcade adaptation featuring responsive canvas rendering, score tracking, speed scaling, and collision detection systems.</p>
+                    <div class="tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                </div>
+
+                <!-- 8. Study Flow - Academic Productivity -->
+                <div class="card project-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Study Flow - Academic Productivity</h3>
+                    <p>A comprehensive student productivity platform featuring a dynamic to-do tracker, timetable planner, and syllabus progress monitor.</p>
+                    <div class="tags">
+                        <span class="tag">HTML/CSS</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Productivity UI</span>
+                    </div>
+                </div>
+
+                <!-- 9. Quiz Blitz -->
+                <div class="card project-card" data-aos="fade-up" data-aos-delay="100">
+                    <h3>Quiz Blitz</h3>
+                    <p>An interactive dynamic quiz engine providing tailored assessments across various topics based on user preferences.</p>
+                    <div class="tags">
+                        <span class="tag">Front-End</span>
+                        <span class="tag">Dynamic UI</span>
+                        <span class="tag">State Management</span>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Skills Section -->
-        <section id="skills">
+        <section id="skills" data-aos="fade-up">
             <div class="section-header">
                 <h2 class="section-title">Technical Proficiency & Certifications</h2>
             </div>
             <div style="margin-bottom: 2rem;">
                 <h3 style="color: var(--accent-cyan); margin-bottom: 1rem; font-size: 1.1rem;">Programming & Core Languages</h3>
                 <div class="skills-wrapper">
-                    <div class="skill-pill">⚡ Python</div>
-                    <div class="skill-pill">☕ Java</div>
-                    <div class="skill-pill">⚙️ C</div>
-                    <div class="skill-pill">🗄️ SQL</div>
-                    <div class="skill-pill">🌐 Front-End (HTML, CSS, JS)</div>
+                    <div class="skill-pill"><i class="fa-brands fa-python" style="color:#38bdf8;"></i> Python</div>
+                    <div class="skill-pill"><i class="fa-brands fa-java" style="color:#a855f7;"></i> Java</div>
+                    <div class="skill-pill"><i class="fa-solid fa-code" style="color:#ec4899;"></i> C</div>
+                    <div class="skill-pill"><i class="fa-solid fa-database" style="color:#38bdf8;"></i> SQL</div>
+                    <div class="skill-pill"><i class="fa-brands fa-html5" style="color:#a855f7;"></i> Front-End (HTML, CSS, JS)</div>
                 </div>
             </div>
             <div>
@@ -610,7 +834,7 @@
         </section>
 
         <!-- Achievements & Co-Curricular Section -->
-        <section id="achievements">
+        <section id="achievements" data-aos="fade-up">
             <div class="section-header">
                 <h2 class="section-title">Achievements & Extracurriculars</h2>
             </div>
@@ -638,7 +862,7 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact">
+        <section id="contact" data-aos="fade-up">
             <div class="contact-box">
                 <h2>Let's Connect</h2>
                 <p>I am actively seeking software engineering, machine learning, and AI-related internship opportunities.</p>
@@ -646,7 +870,12 @@
                     <span>📍 Kolkata, West Bengal</span>
                     <span>📞 +91 98362 43935</span>
                 </div>
-                <a href="mailto:anjalike16@gmail.com" class="btn btn-primary">Send An Email</a>
+                <a href="mailto:anjalike16@gmail.com" class="btn btn-primary"><i class="fa-regular fa-paper-plane"></i> Send An Email</a>
+                
+                <div class="contact-socials">
+                    <a href="https://github.com/" target="_blank" class="social-btn"><i class="fa-brands fa-github"></i> GitHub</a>
+                    <a href="https://linkedin.com/in/" target="_blank" class="social-btn"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                </div>
             </div>
         </section>
     </div>
@@ -657,5 +886,80 @@
         </div>
     </footer>
 
+    <!-- AOS Script for Animations -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        /* --- Anti-Gravity Floating Particles Canvas --- */
+        const canvas = document.getElementById('gravity-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const particleCount = 50;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100; // Start below bottom
+                this.size = Math.random() * 3 + 1;
+                this.speedY = Math.random() * 1.5 + 0.3; // Floating upward (anti-gravity)
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.color = Math.random() > 0.5 ? '#38bdf8' : '#a855f7';
+            }
+
+            update() {
+                this.y -= this.speedY; // Rise upwards
+                this.x += this.speedX;
+
+                // Reset particle when floating off the top screen
+                if (this.y < -10) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
 </body>
 </html>
